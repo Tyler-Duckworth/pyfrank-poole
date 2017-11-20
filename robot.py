@@ -1,8 +1,8 @@
 import wpilib
 
 from commandbased import CommandBasedRobot
-import subsystems
-import oi
+import subsystems.subsystems
+import subsystems.oi
 from commands.nomaddrive import NomadDrive
 
 
