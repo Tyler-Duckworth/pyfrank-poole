@@ -1,6 +1,6 @@
 import wpilib
 
-from wpilib.smartdashboard import smartdashboard
+from wpilib.smartdashboard import SmartDashboard
 from wpilib.command.subsystem import Subsystem
 from wpilib.compressor import Compressor
 from .solenoids import SolenoidHandler
