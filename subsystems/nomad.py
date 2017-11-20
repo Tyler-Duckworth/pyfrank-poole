@@ -11,19 +11,19 @@ from commands.nomaddrive import NomadDrive
 class Nomad(Subsystem):
 
     def __init__(self):
-        self.comp = new Compressor(0)
+        self.comp = Compressor()
         self.comp.start()
 
-        self.gate = new SolenoidHandler(Chandra.gearGateOpen, Chandra.gearGateClose, False, True)
-        self.mouth = new SolenoidHandler(Chandra.gear_intakeTighten, Chandra.gear_intakeLower, False)
-        self.gearBox = new SolenoidHandler(Chandra.gearboxLowGear, Chandra.gearboxHighGear, False)
+        self.gate = SolenoidHandler(Chandra.gearGateOpen, Chandra.gearGateClose, False, True)
+        self.mouth = SolenoidHandler(Chandra.gear_intakeTighten, Chandra.gear_intakeLower, False)
+        self.gearBox = SolenoidHandler(Chandra.gearboxLowGear, Chandra.gearboxHighGear, False)
 
-        self.climb = new DriveMotor(Chandra.climbMotor)
+        self.climb = DriveMotor(Chandra.climbMotor)
         
-        self.lz = new DriveMotor(Chandra.L0Motor)
-        self.lo = new DriveMotor(Chandra.L1Motor)
-        self.rz = new DriveMotor(Chandra.R0Motor)
-        self.ro = new DriveMotor(Chandra.R1Motor)
+        self.lz = DriveMotor(Chandra.L0Motor)
+        self.lo = DriveMotor(Chandra.L1Motor)
+        self.rz = DriveMotor(Chandra.R0Motor)
+        self.ro = DriveMotor(Chandra.R1Motor)
 
         self.lz.setInverted(True)
         self.lo.setInverted(True)
