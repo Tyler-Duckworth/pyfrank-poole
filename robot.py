@@ -12,8 +12,6 @@ class WoprJR(CommandBasedRobot):
         subsystems.init()
         oi.init()
         self.teleopProgram = NomadDrive()
-    def autonomousInit(self):
-
     def teleopInit(self):
         self.teleopProgram.start()
 
