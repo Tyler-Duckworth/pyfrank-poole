@@ -4,7 +4,7 @@ import numpy as np
 
 class Centrifuge(Joystick):
     def __init__(self, port):
-        super(Centrifuge, self).__init__()
+        super().__init__(port)
     def pow_scale(self, val, pow):
         _abs_v = abs(val)
         _sgn_v = np.sign(val)
