@@ -7,14 +7,14 @@ class SolenoidHandler():
         self.sol2 = wpilib.Solenoid(port2)
         self.toget = _toget
         self.invert = _invert
-        self.deff = !self.invert
+        self.deff = not _invert
         self.last = False
-        set(!deff)
+        set(not deff)
     
     def enable(self):
         last = True
         sol1.set(deff)
-        sol2.set(deff ^ !toget)
+        sol2.set(deff ^ (not self.toget))
 
 
     def disable(self):
@@ -27,7 +27,7 @@ class SolenoidHandler():
         return last
     
     def set(self, on):
-        if self.on = True:
+        if self.on is True:
             enable()
         else:
             disable()

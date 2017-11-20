@@ -9,8 +9,8 @@ from robot import Robot
 
 class NomadDrive(Command):
 
-    Centrifuge cont
-    Subsystems systems
+    cont
+    systems
 
     isRestricted = True
     enabled = True

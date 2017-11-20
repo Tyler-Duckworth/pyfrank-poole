@@ -1,27 +1,27 @@
-from wpilib.drivestation import DriverStation
+from wpilib.driverstation import DriverStation
 from wpilib import SmartDashboard 
 from networktables import NetworkTables
 
-from nomad import Nomad
+import nomad
 from oi import OI
 from sensors import Sensors
 
 class Subsystems():
-    NetworkTables infont 
-    DriverStation ds
-    Nomad drive
-    OI oi
-    Sensors sensors
+    infont 
+    ds
+    drive
+    oi
+    sensors
 
     isEnabled = True
 
     def __init__(self):
-        self.drive = new Nomad()
-        self.oi = new OI()
+        self.drive = nomad.Nomad()
+        self.oi = OI()
         self.ds = DriverStation.getInstance()
 
         self.infont = NetworkTables.getTable('info')
-        self.sensors = new Sensors()
+        self.sensors = Sensors()
     
     def dumpInfo(self):
         if isEnabled:
@@ -29,5 +29,5 @@ class Subsystems():
             SmartDashboard.putNumber("Pitch: ", Sensors.__init__.NavX.getPitch())
 
             self.infont.putNumber("BatteryVoltage", self.ds.getBatteryVoltage())
-            DriverStation.Alliance color = self.ds.getAlliance()
+            color = self.ds.getAlliance()
             self.infont.putNumber("color", color.ordinal())

@@ -35,7 +35,7 @@ class Nomad(Subsystem):
         self(False)
 
     def initDefaultCommand(self):
-        setDefaultCommand(new NomadDrive())
+        setDefaultCommand(NomadDrive())
     def stop(self):
         tank_power(0,0)
     def tank_power(self, lpow, rpow):
