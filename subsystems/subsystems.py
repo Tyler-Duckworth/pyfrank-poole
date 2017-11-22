@@ -8,12 +8,10 @@ from .nomad import Nomad
 from .conts import Conts
 from .sensors import Sensors
 
-
 class Subsystems(Subsystem):
     isEnabled = True
-
+    drive = Nomad()
     def __init__(self):
-        self.drive = Nomad()
         self.oi = Conts()
         self.ds = DriverStation.getInstance()
 
