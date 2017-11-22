@@ -2,10 +2,10 @@ from wpilib.robotbase import RobotBase
 
 from .motor import DriveMotor
 from .nomad import Nomad
-from .oi import OI
+from .conts import Conts
 from .sensors import Sensors
 from .solenoids import SolenoidHandler
-from .subsystems import Subsystems
+
 import chandra
 
 drive = None
@@ -17,3 +17,4 @@ def init():
         raise RuntimeError("Subsystems already init'ed")
     
     drive = Nomad()
+

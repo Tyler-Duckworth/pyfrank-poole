@@ -6,7 +6,7 @@ from wpilib.compressor import Compressor
 from .solenoids import SolenoidHandler
 from .motor import DriveMotor
 from chandra import Chandra
-from commands.nomaddrive import NomadDrive
+#from commands.nomaddrive import NomadDrive
 
 class Nomad(Subsystem):
 
@@ -15,8 +15,8 @@ class Nomad(Subsystem):
         self.comp.start()
 
         self.gate = SolenoidHandler(Chandra.gearGateOpen, Chandra.gearGateClose, False, True)
-        self.mouth = SolenoidHandler(Chandra.gear_intakeTighten, Chandra.gear_intakeLower, False)
-        self.gearBox = SolenoidHandler(Chandra.gearboxLowGear, Chandra.gearboxHighGear, False)
+        self.mouth = SolenoidHandler(Chandra.gear_intakeTighten, Chandra.gear_intakeLower, False, False)
+        self.gearBox = SolenoidHandler(Chandra.gearboxLowGear, Chandra.gearboxHighGear, False, False)
 
         self.climb = DriveMotor(Chandra.climbMotor)
         
@@ -31,16 +31,17 @@ class Nomad(Subsystem):
         self.rz.setInverted(False)
         self.ro.setInverted(False)
 
-    def __init__(self):
-        self(False)
 
-    def initDefaultCommand(self):
-        setDefaultCommand(NomadDrive())
+    #def initDefaultCommand(self):
+        #setDefaultCommand(NomadDrive())
+
     def stop(self):
         tank_power(0,0)
     def tank_power(self, lpow, rpow):
-        lz.set(lpow)
-        lo.set(lpow)
+        self.lz.set(self.lpow)
+        self.lo.set(self.lpow)
 
-        rz.set(rpow)
-        ro.set(rpow)
+        self.rz.set(self.rpow)
+        self.ro.set(self.rpow)
+    def initDefaultCommand(self):
+        pass 

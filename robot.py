@@ -1,17 +1,18 @@
 import wpilib
 
 from commandbased import CommandBasedRobot
-import subsystems.subsystems
+import subsystems
 import subsystems.oi
-from commands.nomaddrive import NomadDrive
+import commands
+import commands.nomaddrive
 
 
 class WoprJR(CommandBasedRobot):
 
     def robotInit(self):
         subsystems.init()
-        oi.init()
-        self.teleopProgram = NomadDrive()
+        subsystems.oi.init()
+        self.teleopProgram = commands.nomaddrive.NomadDrive()
     def teleopInit(self):
         self.teleopProgram.start()
 

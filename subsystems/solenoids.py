@@ -9,28 +9,28 @@ class SolenoidHandler():
         self.invert = _invert
         self.deff = not _invert
         self.last = False
-        set(not deff)
+        self.sets(not self.deff)
     
     def enable(self):
         last = True
-        sol1.set(deff)
-        sol2.set(deff ^ (not self.toget))
+        self.sol1.set(self.deff)
+        self.sol2.set(self.deff ^ (not self.toget))
 
 
     def disable(self):
         last = False
-        sol1.set(deff)
-        sol2.set(deff)
+        self.sol1.set(self.deff)
+        self.sol2.set(self.deff)
 
 
     def get(self):
         return last
     
-    def set(self, on):
-        if self.on is True:
-            enable()
+    def sets(self, on):
+        if on is True:
+            self.enable()
         else:
-            disable()
+            self.disable()
             
     def toggle(self):
-        set(last)
+        sets(last)
