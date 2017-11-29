@@ -3,14 +3,14 @@ from wpilib import SmartDashboard
 from wpilib.command.subsystem import Subsystem 
 from networktables import NetworkTables
 
-from .nomad import Nomad
+import subsystems
 #from .nomad import Nomad
 from .conts import Conts
 from .sensors import Sensors
 
 class Subsystems(Subsystem):
     isEnabled = True
-    drive = Nomad()
+    '''drive = Nomad()'''
     def __init__(self):
         self.oi = Conts()
         self.ds = DriverStation.getInstance()

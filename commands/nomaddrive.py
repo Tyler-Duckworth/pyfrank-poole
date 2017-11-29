@@ -4,10 +4,8 @@ from centrifuge import Centrifuge
 from wpilib.command import Command 
 from wpilib import SmartDashboard 
 
-from subsystems.nomad import Nomad
 from subsystems.conts import Conts
 import subsystems
-from robot import WoprJR
 
 class NomadDrive(Command):
 
@@ -19,14 +17,11 @@ class NomadDrive(Command):
     inwards = False
 
     def __init__(self):
-        super().__init__(Nomad)
+        super().__init__('NomadDrive')
 
+        self.requires(subsystems.drive)
         self.cont = Conts()
     def execute(self):
-        self.Lpow = self.cont.controller.getAxis(Chandra.STICK_LEFT_Y_AXIS)
-        self.Rpow = self.cont.controller.getAxis(Chandra.STICK_RIGHT_Y_AXIS)
-        subsystems.Nomad().tank_power(self.Lpow,self.Rpow)
+        subsystems.drive.tank_power(self.cont.controller.getAxis(Chandra.STICK_LEFT_Y_AXIS), self.cont.controller.getAxis(Chandra.STICK_RIGHT_Y_AXIS))
     def end(self):
-        self.nomads.end()
-        
-        
+        subsystems.drive.stop()

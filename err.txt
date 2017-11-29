@@ -1,0 +1,343 @@
+17:37:51:098 INFO    : wpilib              : WPILib version 2017.1.2
+17:37:51:098 INFO    : wpilib              : HAL base version 2017.1.2; sim platform version 2017.1.2
+============================= test session starts ==============================
+platform linux -- Python 3.5.2, pytest-3.2.3, py-1.4.34, pluggy-0.4.0
+rootdir: /home/wade/pyfrank-poole/tests, inifile:
+collected 5 items
+
+pyfrc_test.py FEEEEE
+
+==================================== ERRORS ====================================
+_____________________ ERROR at teardown of test_autonomous _____________________
+
+self = <pyfrc.test_support.pytest_plugin.PyFrcPlugin object at 0x7f93243dd7f0>
+nextitem = <Function 'test_disabled'>
+
+    def pytest_runtest_teardown(self, nextitem):
+    
+        started = self._started
+        self._started = False
+    
+        # Let any child threads run in realtime to allow cancelling if it
+        # has been implemented.
+        self._fake_time.teardown()
+        self._test_controller = None
+    
+        # If the unit test never started, then the rest may hang. Bail
+        # out now instead, and choose to have more errors later.
+        if not started:
+            return
+    
+        import wpilib._impl.utils
+>       wpilib._impl.utils.reset_wpilib()
+
+/usr/local/lib/python3.5/dist-packages/pyfrc/test_support/pytest_plugin.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.5/dist-packages/wpilib/_impl/utils.py:205: in reset_wpilib
+    cls._reset()
+/usr/local/lib/python3.5/dist-packages/wpilib/resource.py:51: in _reset
+    obj.free()
+/usr/local/lib/python3.5/dist-packages/wpilib/pwmspeedcontroller.py:25: in free
+    super().free()
+/usr/local/lib/python3.5/dist-packages/wpilib/pwm.py:105: in free
+    self.__finalizer()
+/usr/lib/python3.5/weakref.py:519: in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+/usr/local/lib/python3.5/dist-packages/wpilib/pwm.py:20: in _freePWM
+    hal.freePWMPort(handle)
+/usr/local/lib/python3.5/dist-packages/hal/functions.py:38: in outer
+    rv = _inner(*args, status=status, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pwmPortHandle = <DigitalPWMHandle at 0x7f931f28ca90 pin=4>, status = c_int(0)
+
+    def freePWMPort(pwmPortHandle, status):
+        status.value = 0
+    
+>       assert hal_data['pwm'][pwmPortHandle.pin]['initialized']
+E       AssertionError
+
+/usr/local/lib/python3.5/dist-packages/hal_impl/functions.py:1318: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+17:37:51:245 INFO    : nt                  : NetworkTables 2017.0.8 initialized in server mode
+----------------------------- Captured stderr call -----------------------------
+17:37:51:262 INFO    : robot               : Default IterativeRobot.disabledInit() method... Overload me!
+_______________________ ERROR at setup of test_disabled ________________________
+
+self = <pyfrc.test_support.pytest_plugin.PyFrcPlugin object at 0x7f93243dd7f0>
+
+    def pytest_runtest_setup(self):
+        # This function needs to do the same things that RobotBase.main does,
+        # plus some extra things needed for testing
+    
+        #
+        # Initialization order is important, because there are a bunch
+        # of inter-related things happening here.
+        #
+        # - Initialize networktables first since it has no dependencies
+        # - Initialize the fake time, because the HAL uses it
+        #   - This initializes the driver station, but it doesn't need HAL yet
+        # - Reset HAL data
+        # - Initialize RobotBase
+        #
+    
+        import networktables
+        if hasattr(networktables, 'NetworkTables'):
+>           networktables.NetworkTables.setTestMode()
+
+/usr/local/lib/python3.5/dist-packages/pyfrc/test_support/pytest_plugin.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.5/dist-packages/networktables/networktables.py:408: in setTestMode
+    cls._checkInit()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'networktables.networktables.NetworkTables'>
+
+    @classmethod
+    def _checkInit(cls):
+        with cls._staticMutex:
+            if cls._running:
+>               raise RuntimeError("Network tables has already been initialized")
+E               RuntimeError: Network tables has already been initialized
+
+/usr/local/lib/python3.5/dist-packages/networktables/networktables.py:129: RuntimeError
+___________________ ERROR at setup of test_operator_control ____________________
+
+self = <pyfrc.test_support.pytest_plugin.PyFrcPlugin object at 0x7f93243dd7f0>
+
+    def pytest_runtest_setup(self):
+        # This function needs to do the same things that RobotBase.main does,
+        # plus some extra things needed for testing
+    
+        #
+        # Initialization order is important, because there are a bunch
+        # of inter-related things happening here.
+        #
+        # - Initialize networktables first since it has no dependencies
+        # - Initialize the fake time, because the HAL uses it
+        #   - This initializes the driver station, but it doesn't need HAL yet
+        # - Reset HAL data
+        # - Initialize RobotBase
+        #
+    
+        import networktables
+        if hasattr(networktables, 'NetworkTables'):
+>           networktables.NetworkTables.setTestMode()
+
+/usr/local/lib/python3.5/dist-packages/pyfrc/test_support/pytest_plugin.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.5/dist-packages/networktables/networktables.py:408: in setTestMode
+    cls._checkInit()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'networktables.networktables.NetworkTables'>
+
+    @classmethod
+    def _checkInit(cls):
+        with cls._staticMutex:
+            if cls._running:
+>               raise RuntimeError("Network tables has already been initialized")
+E               RuntimeError: Network tables has already been initialized
+
+/usr/local/lib/python3.5/dist-packages/networktables/networktables.py:129: RuntimeError
+_______________________ ERROR at setup of test_practice ________________________
+
+self = <pyfrc.test_support.pytest_plugin.PyFrcPlugin object at 0x7f93243dd7f0>
+
+    def pytest_runtest_setup(self):
+        # This function needs to do the same things that RobotBase.main does,
+        # plus some extra things needed for testing
+    
+        #
+        # Initialization order is important, because there are a bunch
+        # of inter-related things happening here.
+        #
+        # - Initialize networktables first since it has no dependencies
+        # - Initialize the fake time, because the HAL uses it
+        #   - This initializes the driver station, but it doesn't need HAL yet
+        # - Reset HAL data
+        # - Initialize RobotBase
+        #
+    
+        import networktables
+        if hasattr(networktables, 'NetworkTables'):
+>           networktables.NetworkTables.setTestMode()
+
+/usr/local/lib/python3.5/dist-packages/pyfrc/test_support/pytest_plugin.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.5/dist-packages/networktables/networktables.py:408: in setTestMode
+    cls._checkInit()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'networktables.networktables.NetworkTables'>
+
+    @classmethod
+    def _checkInit(cls):
+        with cls._staticMutex:
+            if cls._running:
+>               raise RuntimeError("Network tables has already been initialized")
+E               RuntimeError: Network tables has already been initialized
+
+/usr/local/lib/python3.5/dist-packages/networktables/networktables.py:129: RuntimeError
+_________________________ ERROR at setup of test_fuzz __________________________
+
+self = <pyfrc.test_support.pytest_plugin.PyFrcPlugin object at 0x7f93243dd7f0>
+
+    def pytest_runtest_setup(self):
+        # This function needs to do the same things that RobotBase.main does,
+        # plus some extra things needed for testing
+    
+        #
+        # Initialization order is important, because there are a bunch
+        # of inter-related things happening here.
+        #
+        # - Initialize networktables first since it has no dependencies
+        # - Initialize the fake time, because the HAL uses it
+        #   - This initializes the driver station, but it doesn't need HAL yet
+        # - Reset HAL data
+        # - Initialize RobotBase
+        #
+    
+        import networktables
+        if hasattr(networktables, 'NetworkTables'):
+>           networktables.NetworkTables.setTestMode()
+
+/usr/local/lib/python3.5/dist-packages/pyfrc/test_support/pytest_plugin.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.5/dist-packages/networktables/networktables.py:408: in setTestMode
+    cls._checkInit()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'networktables.networktables.NetworkTables'>
+
+    @classmethod
+    def _checkInit(cls):
+        with cls._staticMutex:
+            if cls._running:
+>               raise RuntimeError("Network tables has already been initialized")
+E               RuntimeError: Network tables has already been initialized
+
+/usr/local/lib/python3.5/dist-packages/networktables/networktables.py:129: RuntimeError
+=================================== FAILURES ===================================
+_______________________________ test_autonomous ________________________________
+
+control = <pyfrc.test_support.controller.TestController object at 0x7f931f28ff28>
+fake_time = <pyfrc.test_support.fake_time.FakeTime object at 0x7f93232e8cf8>
+robot = <__main__.WoprJR object at 0x7f9324762cf8>
+
+    def test_autonomous(control, fake_time, robot):
+        '''Runs autonomous mode by itself'''
+    
+        # run autonomous mode for 15 seconds
+        control.set_autonomous(enabled=True)
+>       control.run_test(lambda tm: tm < 15)
+
+/usr/local/lib/python3.5/dist-packages/pyfrc/tests/basic.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.5/dist-packages/pyfrc/test_support/controller.py:148: in run_test
+    self._robot.startCompetition()
+/usr/local/lib/python3.5/dist-packages/commandbased/commandbasedrobot.py:42: in startCompetition
+    self.autonomousPeriodic()
+/usr/local/lib/python3.5/dist-packages/commandbased/commandbasedrobot.py:74: in commandPeriodic
+    self.scheduler.run()
+/usr/local/lib/python3.5/dist-packages/wpilib/command/scheduler.py:159: in run
+    self._add(command)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <wpilib.command.scheduler.Scheduler object at 0x7f931f28c2e8>
+command = <commands.auton.Auton object at 0x7f93243d0fd0>
+
+    def _add(self, command):
+        """Adds a command immediately to the Scheduler. This should only be
+            called in the :meth:`run` loop. Any command with conflicting
+            requirements will be removed, unless it is uninterruptable. Giving
+            None does nothing.
+    
+            :param command: the :class:`.Command` to add
+            """
+        if command is None:
+            return
+    
+        # Check to make sure no adding during adding
+        if self.adding:
+            warnings.warn("Can not start command from cancel method.  Ignoring: %s" % command, RuntimeWarning)
+            return
+    
+        # Only add if not already in
+        if command not in self.commandTable:
+            # Check that the requirements can be had
+            for lock in command.getRequirements():
+>               if (lock.getCurrentCommand() is not None and
+                    not lock.getCurrentCommand().isInterruptible()):
+E                   AttributeError: module 'subsystems.nomad' has no attribute 'getCurrentCommand'
+
+/usr/local/lib/python3.5/dist-packages/wpilib/command/scheduler.py:110: AttributeError
+---------------------------- Captured stderr setup -----------------------------
+17:37:51:245 INFO    : nt                  : NetworkTables 2017.0.8 initialized in server mode
+----------------------------- Captured stderr call -----------------------------
+17:37:51:262 INFO    : robot               : Default IterativeRobot.disabledInit() method... Overload me!
+====================== 1 failed, 5 error in 0.42 seconds =======================
+ERROR: Your robot tests failed, aborting upload.
+
+- Upload anyways? [y/n]- Upload anyways? [y/n]- Upload anyways? [y/n]- Upload anyways? [y/n]- Upload anyways? [y/n]- Upload anyways? [y/n]- Upload anyways? [y/n]- Upload anyways? [y/n]Traceback (most recent call last):
+  File "robot.py", line 26, in <module>
+    wpilib.run(WoprJR)
+  File "/usr/local/lib/python3.5/dist-packages/wpilib/_impl/main.py", line 121, in run
+    retval = options.cmdobj.run(options, robot_class, **kwargs)
+  File "/usr/local/lib/python3.5/dist-packages/pyfrc/mains/cli_deploy.py", line 83, in run
+    if not yesno('- Upload anyways?'):
+  File "/usr/local/lib/python3.5/dist-packages/pyfrc/util.py", line 13, in yesno
+    a = input(prompt).lower()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/usr/lib/python3.5/weakref.py", line 595, in _exitfunc
+    f()
+  File "/usr/lib/python3.5/weakref.py", line 519, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+  File "/usr/local/lib/python3.5/dist-packages/wpilib/pwm.py", line 20, in _freePWM
+    hal.freePWMPort(handle)
+  File "/usr/local/lib/python3.5/dist-packages/hal/functions.py", line 38, in outer
+    rv = _inner(*args, status=status, **kwargs)
+  File "<string>", line 4, in freePWMPort
+  File "/usr/local/lib/python3.5/dist-packages/hal_impl/functions.py", line 1318, in freePWMPort
+    assert hal_data['pwm'][pwmPortHandle.pin]['initialized']
+AssertionError
+Traceback (most recent call last):
+  File "/usr/lib/python3.5/weakref.py", line 595, in _exitfunc
+    f()
+  File "/usr/lib/python3.5/weakref.py", line 519, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+  File "/usr/local/lib/python3.5/dist-packages/wpilib/pwm.py", line 20, in _freePWM
+    hal.freePWMPort(handle)
+  File "/usr/local/lib/python3.5/dist-packages/hal/functions.py", line 38, in outer
+    rv = _inner(*args, status=status, **kwargs)
+  File "<string>", line 4, in freePWMPort
+  File "/usr/local/lib/python3.5/dist-packages/hal_impl/functions.py", line 1318, in freePWMPort
+    assert hal_data['pwm'][pwmPortHandle.pin]['initialized']
+AssertionError
+Traceback (most recent call last):
+  File "/usr/lib/python3.5/weakref.py", line 595, in _exitfunc
+    f()
+  File "/usr/lib/python3.5/weakref.py", line 519, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+  File "/usr/local/lib/python3.5/dist-packages/wpilib/pwm.py", line 20, in _freePWM
+    hal.freePWMPort(handle)
+  File "/usr/local/lib/python3.5/dist-packages/hal/functions.py", line 38, in outer
+    rv = _inner(*args, status=status, **kwargs)
+  File "<string>", line 4, in freePWMPort
+  File "/usr/local/lib/python3.5/dist-packages/hal_impl/functions.py", line 1318, in freePWMPort
+    assert hal_data['pwm'][pwmPortHandle.pin]['initialized']
+AssertionError
+Traceback (most recent call last):
+  File "/usr/lib/python3.5/weakref.py", line 595, in _exitfunc
+    f()
+  File "/usr/lib/python3.5/weakref.py", line 519, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+  File "/usr/local/lib/python3.5/dist-packages/wpilib/pwm.py", line 20, in _freePWM
+    hal.freePWMPort(handle)
+  File "/usr/local/lib/python3.5/dist-packages/hal/functions.py", line 38, in outer
+    rv = _inner(*args, status=status, **kwargs)
+  File "<string>", line 4, in freePWMPort
+  File "/usr/local/lib/python3.5/dist-packages/hal_impl/functions.py", line 1318, in freePWMPort
+    assert hal_data['pwm'][pwmPortHandle.pin]['initialized']
+AssertionError
