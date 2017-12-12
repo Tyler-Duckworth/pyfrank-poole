@@ -10,7 +10,6 @@ from .sensors import Sensors
 
 class Subsystems(Subsystem):
     isEnabled = True
-    '''drive = Nomad()'''
     def __init__(self):
         self.oi = Conts()
         self.ds = DriverStation.getInstance()

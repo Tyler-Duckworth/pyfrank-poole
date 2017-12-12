@@ -13,7 +13,7 @@ class Nomad(Subsystem):
 
     def __init__(self):
         super().__init__('Nomad')
-        '''
+        
         self.comp = Compressor()
         self.comp.start()
 
@@ -22,7 +22,7 @@ class Nomad(Subsystem):
         self.gearBox = SolenoidHandler(Chandra.gearboxLowGear, Chandra.gearboxHighGear, False, False)
 
         self.climb = DriveMotor(Chandra.climbMotor)
-        '''
+        
         self.lz = DriveMotor(Chandra.L0Motor)
         self.lo = DriveMotor(Chandra.L1Motor)
         self.rz = DriveMotor(Chandra.R0Motor)
